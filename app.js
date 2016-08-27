@@ -7,12 +7,7 @@ canvasEl.height = 500; // in px
 canvasEl.style.margin = '0 auto'; //centers our canvas! :)
 
 var context = canvasEl.getContext('2d');
-// context.fillStyle = 'thistle';
-// To draw a rectangle: (pos x, pos y, width, height)
-// context.fillRect(0, 0, 250, 250);
 
-
-//
 var GRID_SIZE = 20; //All caps for emphasis on this constant
 for (var i = GRID_SIZE; i < canvasEl.width; i += GRID_SIZE) {
   context.strokeStyle = 'black';
@@ -50,15 +45,22 @@ var SNAKE = [
   }
 ];
 
-
-context.fillStyle = SNAKE_COLOR;
-SNAKE.forEach(function(snakePart) {
-  context.fillRect(snakePart.x, snakePart.y, GRID_SIZE, GRID_SIZE);
-}); // This draws Snake  |__|ˆ``
-
 var gameSpeed = 250; //in ms
 var snakeDirection = 'right';
 function gameManager() {
+  var newHead = SNAKE.shift();
+  var oldHead = SNAKE[SNAKE.length - 1];
+
+  if (snakeDirection === 'right') {
+    newHead.x = oldHead.x + GRID_SIZE;
+    newHead.y = oldHead.y;
+  }
+
+  SNAKE.push(newHead);
   
+  context.fillStyle = SNAKE_COLOR;
+  SNAKE.forEach(function(snakePart) {
+    context.fillRect(snakePart.x, snakePart.y, GRID_SIZE, GRID_SIZE);
+  }); // This draws Snake  |__|ˆ``
 }
 var gameLoop = setInterval(gameManager, gameSpeed);
