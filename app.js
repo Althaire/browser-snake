@@ -11,8 +11,19 @@ var context = canvasEl.getContext('2d');
 // To draw a rectangle: (pos x, pos y, width, height)
 // context.fillRect(0, 0, 250, 250);
 
-context.strokeStyle = 'white';
-context.beginPath();
-context.moveTo(25, 0);
-context.lineTo(25, canvasEl.height);
-context.stroke();
+var GRID_SIZE = 20; //All caps for emphasis on this constant
+for (var i = GRID_SIZE; i < canvasEl.width; i += GRID_SIZE) {
+  context.strokeStyle = 'white';
+  context.beginPath();
+  context.moveTo(i - 0.5, 0);
+  context.lineTo(i - 0.5, canvasEl.height);
+  context.closePath();
+  context.stroke();
+
+  context.beginPath();
+  context.moveTo(0, i - 0.5);
+  context.lineTo(canvasEl.width, i - 0.5);
+  context.closePath();
+  context.stroke();
+
+}
